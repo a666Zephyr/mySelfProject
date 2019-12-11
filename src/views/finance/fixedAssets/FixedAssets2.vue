@@ -9,7 +9,7 @@
     <div class="table-container">
       <template>
         <el-table
-          :data="groupData"
+          :data="fixedAssetsData"
           border
           @selection-change="handleSelectionChange"
           style="width: 100%">
@@ -17,69 +17,79 @@
           <el-table-column 
             fixed="left"
             type="selection" 
-            width="35"
-            :selected="true" 
+            width="35" 
             :selectable="selectable">
           </el-table-column>
           <el-table-column
-            prop="id"
-            label="ID"
+            fixed="left"
+            prop="name"
+            label="资产名称"
+            width="100">
+          </el-table-column>
+          <el-table-column
+            prop="count"
+            label="数量"
             width="60">
           </el-table-column>
           <el-table-column
-            prop="name"
-            label="组名称"
+            prop="money"
+            label="价格"
+            sortable
             width="100">
           </el-table-column>
           <el-table-column
-            prop="image"
-            label="组头像"
-            width="120">
+            prop="durableYear"
+            label="使用年限"
+            width="90">
           </el-table-column>
           <el-table-column
-            prop="leaderName"
-            label="组长"
+            prop="invoice"
+            label="是否开具发票"
+            width="110">
+          </el-table-column>
+          <el-table-column
+            prop="btime"
+            label="购买时间"
             width="100">
           </el-table-column>
           <el-table-column
-            prop="assistantName"
-            label="副组长"
+            prop="bperson"
+            label="购买负责人"
             width="100">
           </el-table-column>
           <el-table-column
-            prop="type"
-            label="组类型"
-            width="100">
+            prop="status"
+            label="财务确认状态"
+            width="110">
           </el-table-column>
           <el-table-column
-            prop="comment"
-            label="简要"
-            width="120">
+            prop="confirmTime"
+            label="财务确认时间"
+            width="110">
           </el-table-column>
           <el-table-column
-            prop="createDate"
-            label="创建时间"
-            width="120">
-          </el-table-column>
-          <el-table-column
-            prop="number"
-            label="组人数"
+            prop="compensation"
+            label="赔偿金"
             width="80">
           </el-table-column>
           <el-table-column
-            prop="type"
-            label="成员"
+            prop="channel"
+            label="用途"
             width="100">
           </el-table-column>
           <el-table-column
-            prop="id"
+            prop="accessory"
+            label="附件"
+            width="120">
+          </el-table-column>
+          <el-table-column
             fixed="right"
             label="操作"
             width="120">
             <template slot-scope="scope">
-              <el-button @click="seeById(scope.row.id)" type="text" size="small">查看</el-button>
+              <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
               <el-button type="text" size="small">编辑</el-button>
-              <el-button type="text" size="small" @click="deleteOne(scope.row.id)">删除</el-button>
+              <el-button type="text" size="small" @click="deleteOne">删除</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -625,7 +635,7 @@
           // console.log(res)
           if(res.status === 200) {
             this.groupData = res.data.data.records
-            // console.log(this.groupData)
+            console.log(this.groupData)
             this.currPage = res.data.data.current
             this.pageSize = res.data.data.size
             this.total = res.data.data.total
@@ -670,9 +680,8 @@
     margin-right: 20px;
     float: right;
   }
-    .el-dialog__header {
-      background-color: #001529!important;
-    }
-  
+  .el-dialog__header {
+    background-color: #001529!important;
+  }
 }
 </style>

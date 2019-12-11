@@ -21,59 +21,63 @@
             :selectable="selectable">
           </el-table-column>
           <el-table-column
-            fixed="left"
+            prop="id"
+            label="ID"
+            width="100">
+          </el-table-column>
+          <el-table-column
             prop="name"
             label="资产名称"
             width="100">
           </el-table-column>
           <el-table-column
-            prop="count"
+            prop="number"
             label="数量"
             width="60">
           </el-table-column>
           <el-table-column
-            prop="money"
+            prop="price"
             label="价格"
             sortable
             width="100">
           </el-table-column>
           <el-table-column
-            prop="durableYear"
+            prop="use"
             label="使用年限"
             width="90">
           </el-table-column>
           <el-table-column
-            prop="invoice"
+            prop="isInvoice"
             label="是否开具发票"
             width="110">
           </el-table-column>
           <el-table-column
-            prop="btime"
+            prop="date"
             label="购买时间"
             width="100">
           </el-table-column>
           <el-table-column
-            prop="bperson"
+            prop="purchaserId"
             label="购买负责人"
             width="100">
           </el-table-column>
           <el-table-column
-            prop="status"
+            prop="isApprove"
             label="财务确认状态"
             width="110">
           </el-table-column>
           <el-table-column
-            prop="confirmTime"
+            prop="approveDate"
             label="财务确认时间"
             width="110">
           </el-table-column>
           <el-table-column
-            prop="compensation"
+            prop="damage"
             label="赔偿金"
             width="80">
           </el-table-column>
           <el-table-column
-            prop="channel"
+            prop="use"
             label="用途"
             width="100">
           </el-table-column>
@@ -95,247 +99,103 @@
         </el-table>
       </template>
     </div>
+    <div class="pagination">
+      <el-pagination
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page="currPage"
+        :page-sizes="[1, 2, 3, 4]"
+        :page-size="pageSize"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="total">
+      </el-pagination>
+    </div>
   </div>
 </template>
 
 <script>
-
   export default {
     data() {
       return {
-        // selectable: false,
+        showAddAccount: false,
         // 进出账信息
-        fixedAssetsData: [
-          {
-            // 复选框是否选中
-            isSelected: false,
-            // 资产名称
-            name: '固定电脑',
-            // 资产数量
-            count: 30,
-            // 价格
-            money: 150000,
-            // 使用年限
-            durableYear: 7,
-            // 是否开发票
-            invoice: true,
-            // 购买时间
-            btime: '2016-05-03',
-            // 购买负责人
-            bperson: '小王',
-            // 财务确认状态，0审核通过，1待审核，2审核未通过
-            status: 0,
-            // 财务确认时间
-            confirmTime: '2016-05-10',
-            // 赔偿金
-            compensation: 30000,
-            // 用途
-            channel: '***',
-            // 附件（发票等）
-            accessory: '这是附件'
-          },
-          {
-            // 复选框是否选中
-            isSelected: false,
-            // 资产名称
-            name: '固定电脑',
-            // 资产数量
-            count: 30,
-            // 价格
-            money: 150000,
-            // 使用年限
-            durableYear: 7,
-            // 是否开发票
-            invoice: true,
-            // 购买时间
-            btime: '2016-05-03',
-            // 购买负责人
-            bperson: '小王',
-            // 财务确认状态，0审核通过，1待审核，2审核未通过
-            status: 0,
-            // 财务确认时间
-            confirmTime: '2016-05-10',
-            // 赔偿金
-            compensation: 30000,
-            // 用途
-            channel: '***',
-            // 附件（发票等）
-            accessory: '这是附件'
-          },
-          {
-            // 复选框是否选中
-            isSelected: false,
-            // 资产名称
-            name: '固定电脑',
-            // 资产数量
-            count: 30,
-            // 价格
-            money: 150000,
-            // 使用年限
-            durableYear: 7,
-            // 是否开发票
-            invoice: true,
-            // 购买时间
-            btime: '2016-05-03',
-            // 购买负责人
-            bperson: '小王',
-            // 财务确认状态，0审核通过，1待审核，2审核未通过
-            status: 0,
-            // 财务确认时间
-            confirmTime: '2016-05-10',
-            // 赔偿金
-            compensation: 30000,
-            // 用途
-            channel: '***',
-            // 附件（发票等）
-            accessory: '这是附件'
-          },
-          {
-            // 复选框是否选中
-            isSelected: false,
-            // 资产名称
-            name: '固定电脑',
-            // 资产数量
-            count: 30,
-            // 价格
-            money: 150000,
-            // 使用年限
-            durableYear: 7,
-            // 是否开发票
-            invoice: true,
-            // 购买时间
-            btime: '2016-05-03',
-            // 购买负责人
-            bperson: '小王',
-            // 财务确认状态，0审核通过，1待审核，2审核未通过
-            status: 0,
-            // 财务确认时间
-            confirmTime: '2016-05-10',
-            // 赔偿金
-            compensation: 30000,
-            // 用途
-            channel: '***',
-            // 附件（发票等）
-            accessory: '这是附件'
-          },
-          {
-            // 复选框是否选中
-            isSelected: false,
-            // 资产名称
-            name: '固定电脑',
-            // 资产数量
-            count: 30,
-            // 价格
-            money: 150000,
-            // 使用年限
-            durableYear: 7,
-            // 是否开发票
-            invoice: true,
-            // 购买时间
-            btime: '2016-05-03',
-            // 购买负责人
-            bperson: '小王',
-            // 财务确认状态，0审核通过，1待审核，2审核未通过
-            status: 0,
-            // 财务确认时间
-            confirmTime: '2016-05-10',
-            // 赔偿金
-            compensation: 30000,
-            // 用途
-            channel: '***',
-            // 附件（发票等）
-            accessory: '这是附件'
-          },
-          {
-            // 复选框是否选中
-            isSelected: false,
-            // 资产名称
-            name: '固定电脑',
-            // 资产数量
-            count: 30,
-            // 价格
-            money: 150000,
-            // 使用年限
-            durableYear: 7,
-            // 是否开发票
-            invoice: true,
-            // 购买时间
-            btime: '2016-05-03',
-            // 购买负责人
-            bperson: '小王',
-            // 财务确认状态，0审核通过，1待审核，2审核未通过
-            status: 0,
-            // 财务确认时间
-            confirmTime: '2016-05-10',
-            // 赔偿金
-            compensation: 30000,
-            // 用途
-            channel: '***',
-            // 附件（发票等）
-            accessory: '这是附件'
-          },
-          {
-            // 复选框是否选中
-            isSelected: false,
-            // 资产名称
-            name: '固定电脑',
-            // 资产数量
-            count: 30,
-            // 价格
-            money: 150000,
-            // 使用年限
-            durableYear: 7,
-            // 是否开发票
-            invoice: true,
-            // 购买时间
-            btime: '2016-05-03',
-            // 购买负责人
-            bperson: '小王',
-            // 财务确认状态，0审核通过，1待审核，2审核未通过
-            status: 0,
-            // 财务确认时间
-            confirmTime: '2016-05-10',
-            // 赔偿金
-            compensation: 30000,
-            // 用途
-            channel: '***',
-            // 附件（发票等）
-            accessory: '这是附件'
-          },
-          {
-            // 复选框是否选中
-            isSelected: false,
-            // 资产名称
-            name: '固定电脑',
-            // 资产数量
-            count: 30,
-            // 价格
-            money: 150000,
-            // 使用年限
-            durableYear: 7,
-            // 是否开发票
-            invoice: true,
-            // 购买时间
-            btime: '2016-05-03',
-            // 购买负责人
-            bperson: '小王',
-            // 财务确认状态，0审核通过，1待审核，2审核未通过
-            status: 0,
-            // 财务确认时间
-            confirmTime: '2016-05-10',
-            // 赔偿金
-            compensation: 30000,
-            // 用途
-            channel: '***',
-            // 附件（发票等）
-            accessory: '这是附件'
-          }
-        ],
+        fixedAssetsData: [],
         // "批量删除"按钮 是否可以操作
-        isButtonOperated: false
+        isButtonOperated: false,
+        currPage: 1,
+        // 表格每一页展示的行数
+        pageSize: 2,
+        // "批量删除"按钮 是否可以操作
+        isButtonOperated: false,
+        // 添加组信息的表单
+        form: {
+          name: '',
+          comment: '',
+          leaderName: '',
+          assistantName: '',
+          type: '',
+          member: '',
+          image: '',
+        },
+        // 查看组信息的表单
+        form2: {
+          id: 0,
+          name: '',
+          comment: '',
+          leaderName: '',
+          assistantName: '',
+          type: '',
+          member: '',
+          image: '',
+        },
+        dialogFormVisible: false,
+        total: 0,
+        imageUrl: '',
+        // 表单验证规则
+        rules: {
+          name: [
+            {required: true, message: '请输入组名', trigger: 'blur'},
+            {min: 1, max: 10, message: '长度为 1 到 10 个字符', trigger: 'blur'}
+          ],
+          comment: [
+            {required: true, message: '请输入简要', trigger: 'blur'},
+            {min: 3, max: 30, message: '长度为 3 到 30 个字符', trigger: 'blur'}
+          ],
+          leaderName: [
+            {required: true, message: '请输入组长名字', trigger: 'blur'},
+            {min: 2, max: 10, message: '长度为 2 到 10 个字符', trigger: 'blur'}
+          ],
+          assistantName: [
+            {required: true, message: '请输入副组长名字', trigger: 'blur'},
+            {min: 2, max: 10, message: '长度为 2 到 10 个字符', trigger: 'blur'}
+          ],
+          type: [
+            {required: true, message: '请输入类型', trigger: 'blur'},
+            {min: 2, max: 5, message: '长度为 2 到 5 个字符', trigger: 'blur'}
+          ]
+        },
+        // 选择框为选中状态的数据的 id 组成的数组
+        selectedIdArr: [],
+        selectedIdArrStr: ''
       }
     },
+    created() {
+      this.getFixedAssetsData()
+    },
     methods: {
+      getFixedAssetsData() {
+        this.$http.get('http://121.41.67.25:8062/property/select/'+this.currPage + '/' +this.pageSize)
+          .then(res => {
+            if(res.status === 200) {
+              if (res.data.code === 200) {
+                this.fixedAssetsData = res.data.data.records
+                this.currPage = res.data.data.current
+                this.pageSize = res.data.data.size
+                this.total = res.data.data.total
+              }
+            }
+          })
+      },
       handleClick(row) {
         console.log(row);
       },
@@ -345,12 +205,7 @@
         console.log(val)
         this.isButtonOperated = val.length > 0 ? true: false
       },
-      selectable() {          
-        /* if(row.status == 1){
-          return true
-        }else {
-          return false
-        } */
+      selectable() { 
         return true
       },
       // “批量删除”
@@ -388,7 +243,19 @@
             message: '已取消删除'
           });          
         });
-      }
+      },
+      // 切换当前页
+      handleCurrentChange(cpage) {
+        this.currPage = cpage
+        // console.log('当前页：'+cpage)
+        this.getFixedAssetsData()
+      },
+      // 切换一页展示的条数
+      handleSizeChange(psize) {
+        this.pageSize = psize
+        // console.log('展示条数：'+psize)
+        this.getFixedAssetsData()
+      },
     }
   }
 </script>
@@ -403,6 +270,11 @@
   }
   .table-container {
     margin-top: 10px;
+  }
+  .pagination {
+    margin-top: 10px;
+    margin-right: 20px;
+    float: right;
   }
 }
 </style>

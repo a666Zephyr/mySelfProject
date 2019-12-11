@@ -237,7 +237,7 @@ export default {
           children: [
             {
               name: '公司每月进出账情况',
-              path: '/'
+              path: '/statistics/bill'
             },
             {
               name: '公司每月的员工招聘和流失情况',

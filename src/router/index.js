@@ -20,9 +20,9 @@ Vue.use(VueRouter)
 
 const router = new VueRouter({
   routes: [
-     {
+    {
       path: '/',
-      redirect: '/personnel/list'
+      redirect: '/finance/company'
     },
     {
       // 人事路由
@@ -127,7 +127,7 @@ const router = new VueRouter({
       component: () => import('views/statistics/Statistics'),
       children: [
         {
-          path: 'bill',
+          path: 'bill',  
           component: () => import('views/statistics/bill/CompanyBill')
         },
         {

@@ -1,7 +1,7 @@
 <template>
   <div class="statistics">
     <h2 >统计分析</h2>
-    <view-router></view-router>
+    <router-view></router-view>
   </div>
 </template>
 
